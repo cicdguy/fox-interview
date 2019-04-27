@@ -1,0 +1,31 @@
+---
+- name: Install setuptools and pip
+  package:
+     name: 
+       - python-setuptools
+       - python-pip
+     state: present
+
+- name: Install boto3 and botocore
+  pip:
+    name:
+      - boto3
+      - botocore
+      - setuptools
+
+- name: Download S3 artifact to lighttpd document root
+  aws_s3:
+    access_key: "{{ aws_access_key }}"
+    secret_key: "{{ aws_secret_key }}"
+    bucket: "{{ s3_bucket }}"
+    object: "{{ s3_artifact }}"
+    region: "{{ aws_region }}"
+    dest: "{{ document_root }}/{{ s3_artifact }}"
+    mode: get
+    overwrite: different
+
+- name: Unpack downloaded artifact
+  unarchive:
+    src: "{{ document_root }}/{{ s3_artifact }}"
+    dest: "{{ document_root }}"
+    remote_src: yes

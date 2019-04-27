@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+if [ -x "$(command -v ansible)" ]
+then {
+    echo "Ansible is already installed. Not installing"
+} else {
+    echo "Installing ansible in a virtualenv"
+    virtualenv venv
+    . venv/bin/activate
+    pip install ansible
+}
+fi

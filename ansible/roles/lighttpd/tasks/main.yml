@@ -1,0 +1,36 @@
+---
+- name: Enable EPEL repo
+  package:
+    name: epel-release
+    state: present
+  become: true
+
+- name: Install lighttpd
+  package:
+    name: lighttpd
+    state: present
+  become: true
+  register: result
+
+- name: Create document root
+  file:
+    path: "{{ document_root }}"
+    state: directory
+
+- name: Ensure lighttpd is enabled and started
+  service:
+    name: lighttpd
+    state: started
+    enabled: true
+  become: true
+
+- name: Configure lighttpd
+  template:
+    src: lighttpd.conf.j2
+    dest: "{{ lighttpd_config_file }}"
+    owner: root
+    group: root
+    mode: 0644
+  become: true
+  notify:
+    - Restart lighttpd

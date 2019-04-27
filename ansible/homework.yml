@@ -1,0 +1,18 @@
+---
+- hosts: all
+  vars:
+      document_root: /srv/bogusapp
+      ec2_access_key: 
+      ec2_secret_key: 
+  roles:
+      - role: lighttpd
+        become: yes
+      - role: download-artifact
+        become: yes
+  tasks:
+  - name: Print info
+    debug: 
+      msg: "lighttpd is available at http://{{ ip }}:{{ server_port }}"
+    sudo: yes
+    vars:
+      ip: "{{ hostvars[inventory_hostname]['ansible_eth1']['ipv4']['address'] }}"

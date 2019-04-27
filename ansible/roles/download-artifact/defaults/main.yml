@@ -1,0 +1,4 @@
+---
+s3_artifact: homework.tar.gz
+s3_bucket: bogus-app-homework
+aws_region: us-west-2

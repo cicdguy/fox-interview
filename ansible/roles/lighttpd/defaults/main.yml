@@ -1,0 +1,14 @@
+---
+# defaults file for ansible-lighttpd
+lighttpd_config_file: /etc/lighttpd/lighttpd.conf
+
+server_bind_address: 0.0.0.0
+server_port: 80
+
+log_root: /var/log/lighttpd
+server_root: /srv
+document_root: "{{ server_root }}/bogusapp"
+state_dir: /var/run
+home_dir: /var/lib/lighttpd
+conf_dir: /etc/lighttpd
+cache_dir: /var/cache/lighttpd
